@@ -4,7 +4,6 @@ package main
 import (
 	_ "github.com/lib/pq"
 	"database/sql"
-	//"os"
 	"log"
 	"fmt"
 	"os"
@@ -44,8 +43,9 @@ func create_table ()  {
 
 	qv1 := "CREATE TABLE IF NOT EXISTS rooms("+
 		"id SERIAL CONSTRAINT _id_r PRIMARY KEY,"+
-		"block_id INTEGER REFERENCES blocks(id),"+
-		"price INTEGER NOT NULL CHECK  (price > 0),"+
+		"number INTEGER NOT NULL CHECK (number > -1),"+
+		"block_id INTEGER REFERENCES blocks,"+
+		"price INTEGER NOT NULL CHECK  (price > -1),"+
 		"water INTEGER NOT NULL CHECK (water = 1 OR water =0),"+
 		"free INTEGER NOT NULL CHECK (free = 1 OR free = 0),"+
 		"date VARCHAR(255) NOT NULL"+
