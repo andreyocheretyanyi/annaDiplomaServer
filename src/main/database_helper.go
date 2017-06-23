@@ -78,7 +78,7 @@ func add_block(block Block)  {
 	db := open_db()
 	defer db.Close()
 	_, err := db.Exec("INSERT INTO blocks (id,name)" +
-		" VALUES ($1,2);",
+		" VALUES ($1,$2);",
 		block.Id,block.Name)
 	if err != nil{
 		fmt.Println(err)
