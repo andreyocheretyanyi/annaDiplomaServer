@@ -37,12 +37,12 @@ func create_table ()  {
 	db := open_db()
 	defer db.Close()
 	qv := "CREATE TABLE IF NOT EXISTS blocks("+
-		"id SERIAL CONSTRAINT _id PRIMARY KEY,"+
+		"id INTEGER NOT NULL CONSTRAINT _id PRIMARY KEY,"+
 		"name VARCHAR(64) NOT NULL"+
 	");"
 
 	qv1 := "CREATE TABLE IF NOT EXISTS rooms("+
-		"id SERIAL CONSTRAINT _id_r PRIMARY KEY,"+
+		"id INTEGER NOT NULL CONSTRAINT _id_r PRIMARY KEY,"+
 		"number INTEGER NOT NULL CHECK (number > -1),"+
 		"block_id INTEGER REFERENCES blocks,"+
 		"price INTEGER NOT NULL CHECK  (price > -1),"+
@@ -77,9 +77,9 @@ func wipe_table(){
 func add_block(block Block)  {
 	db := open_db()
 	defer db.Close()
-	_, err := db.Exec("INSERT INTO blocks (name)" +
-		" VALUES ($1);",
-		block.Name)
+	_, err := db.Exec("INSERT INTO blocks (id,name)" +
+		" VALUES ($1,2);",
+		block.Id,block.Name)
 	if err != nil{
 		fmt.Println(err)
 	}
@@ -88,9 +88,9 @@ func add_block(block Block)  {
 func add_room(room Room)  {
 	db := open_db()
 	defer db.Close()
-	_, err := db.Exec("INSERT INTO rooms (number, block_id, price, water, free,date)" +
-		"VALUES ($1,$2,$3,$4,$5,$6);",
-		room.Number,room.Block_id,room.Price,room.Water,room.Free,room.Date)
+	_, err := db.Exec("INSERT INTO rooms (id,number, block_id, price, water, free,date)" +
+		"VALUES ($1,$2,$3,$4,$5,$6,$7);",
+		room.Id,room.Number,room.Block_id,room.Price,room.Water,room.Free,room.Date)
 	if err != nil{
 		fmt.Println(err)
 	}
